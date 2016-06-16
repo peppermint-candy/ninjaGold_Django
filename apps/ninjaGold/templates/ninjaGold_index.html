@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		div.ct {
+			height: 600px;
+			width: 950px;
+			border: 1px dotted blue;
+			margin: 20px auto;
+		}
+
+		div.goldBox {
+			width: 940px;
+			height: 100px;
+			vertical-align: top;
+			text-align: top;
+			padding-top: 30px;
+		}
+
+		div#coinDisplay {
+			width: 200px;
+			height: 20px;
+			vertical-align: top;
+			display: inline-block;
+			outline: 2px solid black;
+		}
+
+		div.select {
+			width: 950px;
+			height: 200px;
+			vertical-align: top;
+		}
+
+		div.option {
+			width: 200px;
+			height: 180px;
+			display: inline-block;
+			vertical-align: top;
+			margin: 10px 15px;
+			outline: 2px solid blue;
+			border-radius: 5px;
+			text-align: center;
+
+		}
+
+		div.log {
+			width: 950px;
+			height: 200px;
+			overflow-y: auto;
+			outline: 1px solid blue;
+		}
+	</style>
+	<title>Ninja Gold</title>
+</head>
+<body>
+	<div class="ct">
+		<div class="goldBox" >
+			Your Gold: <div id="coinDisplay"> 
+			{{ request.session.coin }}
+			</div>
+			<form action="/reset" method="post">
+				<input type="submit" name="clear" value="Restart">
+			</form>
+		</div>
+		<div class="select">
+			<div class="option">
+				<h3>Farm</h3>
+				<p>(earns 10-20 golds)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="farm" />
+					<input type="submit" value="Find Gold!"/>
+				</form> 
+				</div>
+			<div class="option">
+				<h3>Cave</h3>
+				<p>(earns 5-10 golds)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="cave" />
+					<input type="submit" value="Find Gold!"/>
+				</form> 
+			</div>
+			<div class="option">
+				<h3>House</h3>
+				<p>(earns 2-5 golds)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="house" />
+					<input type="submit" value="Find Gold!"/>
+				</form> 
+			</div>
+			<div class="option">
+				<h3>Casino</h3>
+				<p>(earns/takes 0-50 golds)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="casino" />
+					<input type="submit" value="Find Gold!"/>
+				</form> 
+			</div>
+			<p>Activities: </p>
+			<div class="log">
+			{% for i in range(request.session.log | count -1,0,1) %}
+				<p>{{ request.session.log[i] }}</p>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
