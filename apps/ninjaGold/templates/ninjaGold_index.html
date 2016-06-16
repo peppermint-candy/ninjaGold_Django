@@ -59,6 +59,7 @@
 			{{ request.session.coin }}
 			</div>
 			<form action="/reset" method="post">
+				{% csrf_token %}
 				<input type="submit" name="clear" value="Restart">
 			</form>
 		</div>
@@ -67,6 +68,7 @@
 				<h3>Farm</h3>
 				<p>(earns 10-20 golds)</p>
 				<form action="/process_money" method="post">
+					{% csrf_token %}
 					<input type="hidden" name="building" value="farm" />
 					<input type="submit" value="Find Gold!"/>
 				</form> 
@@ -75,6 +77,7 @@
 				<h3>Cave</h3>
 				<p>(earns 5-10 golds)</p>
 				<form action="/process_money" method="post">
+					{% csrf_token %}
 					<input type="hidden" name="building" value="cave" />
 					<input type="submit" value="Find Gold!"/>
 				</form> 
@@ -83,6 +86,7 @@
 				<h3>House</h3>
 				<p>(earns 2-5 golds)</p>
 				<form action="/process_money" method="post">
+					{% csrf_token %}
 					<input type="hidden" name="building" value="house" />
 					<input type="submit" value="Find Gold!"/>
 				</form> 
@@ -91,15 +95,19 @@
 				<h3>Casino</h3>
 				<p>(earns/takes 0-50 golds)</p>
 				<form action="/process_money" method="post">
+					{% csrf_token %}
 					<input type="hidden" name="building" value="casino" />
 					<input type="submit" value="Find Gold!"/>
 				</form> 
 			</div>
 			<p>Activities: </p>
 			<div class="log">
-			{% for i in range(request.session.log | count -1,0,1) %}
-				<p>{{ request.session.log[i] }}</p>
-			{% endfor %}
+			{% if request.session.log %}
+				{% for i in request.session.log %}
+			 		{{ i }} <br>
+				{% endfor %}
+			{% endif %}
+
 			</div>
 		</div>
 	</div>
